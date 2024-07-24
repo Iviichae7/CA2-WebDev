@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SP</title>
+    <link href="/css/output.css" rel="stylesheet" />
+    <link href="/css/styles.css" rel="stylesheet" />
+  </head>
+  <body class="bg-cream h-screen flex items-center justify-center">
+    <div
+      id="welcome-screen"
+      class="absolute inset-0 bg-cream flex items-center justify-center z-50"
+    >
+      <h1 id="welcome-text" class="text-5xl font-bold text-coral">
+        Welcome to Your Study Planner
+      </h1>
+    </div>
+    <div
+      id="main-content"
+      class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md hidden opacity-0"
+    >
+      <h1 class="text-3xl font-bold mb-6 text-coral text-center">
+        Before we get started, please provide us with some information.
+      </h1>
+      <form action="/submit" method="POST" class="space-y-4">
+        <div>
+          <label for="first_name" class="block text-black mb-1"
+            >First Name</label
+          >
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-dustyRose"
+            required
+          />
+        </div>
+        <div>
+          <label for="surname" class="block text-black mb-1">Surname</label>
+          <input
+            type="text"
+            id="surname"
+            name="surname"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-dustyRose"
+            required
+          />
+        </div>
+        <div>
+          <label for="username" class="block text-black mb-1">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-dustyRose"
+            required
+          />
+        </div>
+        <div>
+          <label for="email" class="block text-black mb-1">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-dustyRose"
+            required
+          />
+        </div>
+        <div>
+          <button
+            type="submit"
+            class="w-full bg-coral text-white px-4 py-2 rounded-lg hover:bg-dustyRose focus:outline-none focus:ring-2 focus:ring-dustyRose"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+      <div class="mt-4 text-center">
+        <a href="#" id="sign-in-link" class="text-coral hover:underline"
+          >Already have an account? Sign in.</a
+        >
+      </div>
+    </div>
+
+    <div
+      id="sign-in-content"
+      class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md hidden opacity-0"
+    >
+      <h1 class="text-3xl font-bold mb-6 text-coral text-center">Sign In</h1>
+      <form action="/signin" method="POST" class="space-y-4">
+        <div>
+          <label for="signin_username" class="block text-black mb-1"
+            >Username</label
+          >
+          <input
+            type="text"
+            id="signin_username"
+            name="username"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-dustyRose"
+            required
+          />
+        </div>
+        <div>
+          <label for="signin_email" class="block text-black mb-1"
+            >Email Address</label
+          >
+          <input
+            type="email"
+            id="signin_email"
+            name="email"
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-dustyRose"
+            required
+          />
+        </div>
+        <div>
+          <button
+            type="submit"
+            class="w-full bg-coral text-white px-4 py-2 rounded-lg hover:bg-dustyRose focus:outline-none focus:ring-2 focus:ring-dustyRose"
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
+      <div class="mt-4 text-center">
+        <a href="#" id="back-to-main-link" class="text-coral hover:underline"
+          >Back to main form</a
+        >
+      </div>
+    </div>
+
+    <script src="/js/welcomeAni.js"></script>
+  </body>
+</html>
