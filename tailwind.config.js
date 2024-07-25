@@ -9,6 +9,9 @@ module.exports = {
         dustyRose: "#F8AFA6",
         coral: "#F79489",
       },
+      backdropBlur: {
+        xs: "2px",
+      },
       keyframes: {
         fadeInChar: {
           "0%": { opacity: "0", transform: "translateX(-50%)" },

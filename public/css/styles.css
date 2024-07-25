@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.glass-container {
+  @apply backdrop-blur-xs bg-white/20 rounded-lg shadow-lg;
+}
