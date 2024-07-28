@@ -12,22 +12,31 @@ document.addEventListener("DOMContentLoaded", () => {
   Each span gets classes for styling and animation making them initially invisible and animating their appearance
   The animation delay is by 0.1s for each character
   */
-  welcomeText.innerHTML = text
-    .split("")
-    .map((char, index) => {
-      const delay = index * 0.1;
-      return `<span class="inline-block opacity-0 animate-fadeInChar" style="animation-delay: ${delay}s;">${
-        char === " " ? "&nbsp;" : char
-      }</span>`;
-    })
-    .join("");
-
-  // A timeout to hide the welcome screen and show the main content with a fade in animation
-  setTimeout(() => {
+  const showMainContent = () => {
     welcomeScreen.classList.add("hidden");
     mainContent.classList.remove("hidden");
     mainContent.classList.add("animate-fadeInForm");
-  }, 5200);
+  };
+
+  if (!sessionStorage.getItem("welcomeShown")) {
+    welcomeText.innerHTML = text
+      .split("")
+      .map((char, index) => {
+        const delay = index * 0.1;
+        return `<span class="inline-block opacity-0 animate-fadeInChar" style="animation-delay: ${delay}s;">${
+          char === " " ? "&nbsp;" : char
+        }</span>`;
+      })
+      .join("");
+
+    // A timeout to hide the welcome screen and show the main content with a fade in animation
+    setTimeout(() => {
+      showMainContent();
+      sessionStorage.setItem("welcomeShown", "true");
+    }, 5200);
+  } else {
+    showMainContent();
+  }
 
   // Switching to sign-in form
   signInLink.addEventListener("click", (event) => {
@@ -44,4 +53,12 @@ document.addEventListener("DOMContentLoaded", () => {
     mainContent.classList.remove("hidden");
     mainContent.classList.add("animate-fadeInForm");
   });
+  // Check if showSignInForm flag is set and display the correct form
+  const showSignInForm =
+    document.body.getAttribute("data-show-sign-in-form") === "true";
+  if (showSignInForm) {
+    mainContent.classList.add("hidden");
+    signInContent.classList.remove("hidden");
+    signInContent.classList.add("animate-fadeInForm");
+  }
 });
