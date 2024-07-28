@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
   });
 });
 
-const { getTasks, createTask } = require("./models/Task");
+const { getTasks, createTask, removeTask } = require("./models/Task");
 
 app.get("/tasks/:userId", async (req, res) => {
   const { userId } = req.params;
@@ -67,6 +67,22 @@ app.post("/tasks", async (req, res) => {
   try {
     const taskId = await createTask(userId, taskName, description, deadline);
     res.json({ taskId });
+  } catch (err) {
+    res.status(500);
+  }
+});
+
+// Task removal route
+app.post("/tasks/remove", async (req, res) => {
+  const { taskId } = req.body;
+
+  try {
+    const success = await removeTask(taskId);
+    if (success) {
+      res.json({ success: true });
+    } else {
+      res.status(400).json({ success: false });
+    }
   } catch (err) {
     res.status(500);
   }
