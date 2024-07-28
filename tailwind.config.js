@@ -24,7 +24,7 @@ module.exports = {
       },
       animation: {
         fadeInChar: "fadeInChar 0.5s ease-in-out forwards",
-        fadeInForm: "fadeInForm 2s ease-in-out forwards",
+        fadeInForm: "fadeInForm 0.5s ease-in-out forwards",
       },
     },
   },
