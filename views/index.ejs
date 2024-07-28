@@ -7,7 +7,10 @@
     <link href="/css/output.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
   </head>
-  <body class="bg-cream h-screen flex items-center justify-center">
+  <body
+    class="bg-cream h-screen flex items-center justify-center"
+    data-show-sign-in-form="<%= showSignInForm %>"
+  >
     <div
       id="welcome-screen"
       class="absolute inset-0 bg-cream flex items-center justify-center z-50"
@@ -18,11 +21,18 @@
     </div>
     <div
       id="main-content"
-      class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md hidden opacity-0"
+      class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md hidden opacity-0 <%= showSignInForm ? 'hidden' : '' %>"
     >
       <h1 class="text-3xl font-bold mb-6 text-coral text-center">
         Before we get started, please provide us with some information.
       </h1>
+      <% if (signUpErrors && signUpErrors.length > 0) { %>
+      <ul>
+        <% signUpErrors.forEach(function(error) { %>
+        <li class="text-red-500"><%= error.msg %></li>
+        <% }); %>
+      </ul>
+      <% } %>
       <form action="/auth/submit" method="POST" class="space-y-4">
         <div>
           <label for="first_name" class="block text-black mb-1"
@@ -84,9 +94,16 @@
 
     <div
       id="sign-in-content"
-      class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md hidden opacity-0"
+      class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md hidden opacity-0 <%= showSignInForm ? '' : 'hidden' %>"
     >
       <h1 class="text-3xl font-bold mb-6 text-coral text-center">Sign In</h1>
+      <% if (signInErrors && signInErrors.length > 0) { %>
+      <ul>
+        <% signInErrors.forEach(function(error) { %>
+        <li class="text-red-500"><%= error.msg %></li>
+        <% }); %>
+      </ul>
+      <% } %>
       <form action="/auth/signin" method="POST" class="space-y-4">
         <div>
           <label for="signin_username" class="block text-black mb-1"
@@ -123,7 +140,7 @@
       </form>
       <div class="mt-4 text-center">
         <a href="#" id="back-to-main-link" class="text-coral hover:underline"
-          >Back to main form</a
+          >Don't have an account yet? Sign Up.</a
         >
       </div>
     </div>
