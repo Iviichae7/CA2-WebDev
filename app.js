@@ -33,7 +33,11 @@ app.use(
 app.use("/auth", require("./routes/auth"));
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {
+    signUpErrors: [],
+    signInErrors: [],
+    showSignInForm: false,
+  });
 });
 
 const { getTasks, createTask } = require("./models/Task");
