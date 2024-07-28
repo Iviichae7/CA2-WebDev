@@ -7,6 +7,10 @@
     <link href="/css/output.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body class="bg-cream h-screen flex">
     <div class="glass-container p-4 w-1/4 m-4">
@@ -14,10 +18,13 @@
       <ul id="task-list" class="space-y-2">
         <% tasks.forEach(function(task) { %>
         <li
-          class="bg-white p-2 rounded shadow draggable"
-          data-event='{"title":"<%= task.task_name %>"}'
+          class="bg-white p-2 rounded shadow flex justify-between items-center"
         >
-          <%= task.task_name %>
+          <span><%= task.task_name %></span>
+          <i
+            class="fas fa-trash remove-task text-red-500 cursor-pointer"
+            data-task-id="<%= task.id %>"
+          ></i>
         </li>
         <% }) %>
       </ul>
@@ -57,5 +64,6 @@
     </div>
     <script src="/js/calendar.js"></script>
     <script src="/js/taskForm.js"></script>
+    <script src="/js/taskRemove.js"></script>
   </body>
 </html>
