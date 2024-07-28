@@ -2,6 +2,17 @@ const express = require("express");
 const router = express.Router();
 const promisePool = require("../config/database");
 const { body, validationResult } = require("express-validator");
+const predefinedTasks = require("../models/predefinedTasks");
+
+// Predefined tasks for a user
+const addPredefinedTasks = async (userId) => {
+  for (const task of predefinedTasks) {
+    await promisePool.query(
+      "INSERT INTO Tasks (user_id, task_name, description, deadline) VALUES (?, ?, ?, ?)",
+      [userId, task.task_name, task.description, task.deadline]
+    );
+  }
+};
 
 // Reg route
 router.post(
@@ -42,6 +53,9 @@ router.post(
         [first_name, surname, username, email]
       );
       req.session.userId = result.insertId;
+
+      await addPredefinedTasks(result.insertId);
+
       res.redirect(`/tasks/${result.insertId}`);
     } catch (err) {
       res.status(500);
