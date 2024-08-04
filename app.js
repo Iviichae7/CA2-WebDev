@@ -40,7 +40,13 @@ app.get("/", (req, res) => {
   });
 });
 
-const { getTasks, createTask, removeTask } = require("./models/Task");
+const {
+  getTasks,
+  createTask,
+  removeTask,
+  getTaskById,
+  updateTask,
+} = require("./models/Task");
 
 app.get("/tasks/:userId", async (req, res) => {
   const { userId } = req.params;
@@ -48,10 +54,41 @@ app.get("/tasks/:userId", async (req, res) => {
     const [user] = await promisePool.query("SELECT * FROM Users WHERE id = ?", [
       userId,
     ]);
-    const tasks = await getTasks(userId);
-    res.render("tasks", { user: user[0], tasks });
+    const tasks = await getTasks(userId, 0);
+    const calendarTasks = await getTasks(userId, 2);
+    res.render("tasks", { user: user[0], tasks, calendarTasks });
   } catch (err) {
     res.status(500);
+  }
+});
+
+app.get("/task/:taskId", async (req, res) => {
+  const { taskId } = req.params;
+  try {
+    const task = await getTaskById(taskId);
+    res.json(task);
+  } catch (err) {
+    res.status(500);
+  }
+});
+
+app.put("/tasks/:id/date", async (req, res) => {
+  const { id } = req.params;
+  const { date } = req.body;
+
+  try {
+    const [result] = await promisePool.query(
+      "UPDATE Tasks SET deadline = ?, StatusID = 2 WHERE id = ?",
+      [date, id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).send("Task not found");
+    }
+
+    res.send("Task updated and added to calendar");
+  } catch (err) {
+    res.status(500).send("Error updating task date");
   }
 });
 
@@ -78,6 +115,23 @@ app.post("/tasks/remove", async (req, res) => {
 
   try {
     const success = await removeTask(taskId);
+    if (success) {
+      res.json({ success: true });
+    } else {
+      res.status(400).json({ success: false });
+    }
+  } catch (err) {
+    res.status(500);
+  }
+});
+
+// Task update route
+app.put("/tasks/:taskId", async (req, res) => {
+  const { taskId } = req.params;
+  const { taskName, description, deadline } = req.body;
+
+  try {
+    const success = await updateTask(taskId, taskName, description, deadline);
     if (success) {
       res.json({ success: true });
     } else {
