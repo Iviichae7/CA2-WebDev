@@ -1,10 +1,10 @@
 const promisePool = require("../config/database");
 
-async function getTasks(userId) {
+async function getTasks(userId, statusId = 0) {
   try {
     const [tasks] = await promisePool.query(
-      "SELECT * FROM Tasks WHERE user_id = ? AND StatusID = 0",
-      [userId]
+      "SELECT * FROM Tasks WHERE user_id = ? AND StatusID = ?",
+      [userId, statusId]
     );
     return tasks;
   } catch (err) {
@@ -36,8 +36,34 @@ async function removeTask(taskId) {
   }
 }
 
+async function getTaskById(taskId) {
+  try {
+    const [tasks] = await promisePool.query(
+      "SELECT * FROM Tasks WHERE id = ? AND StatusID = 0",
+      [taskId]
+    );
+    return tasks[0];
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function updateTask(taskId, taskName, description, deadline) {
+  try {
+    const [result] = await promisePool.query(
+      "UPDATE Tasks SET task_name = ?, description = ?, deadline = ? WHERE id = ?",
+      [taskName, description, deadline, taskId]
+    );
+    return result.affectedRows > 0;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports = {
   getTasks,
   createTask,
   removeTask,
+  getTaskById,
+  updateTask,
 };
