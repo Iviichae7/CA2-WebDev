@@ -15,8 +15,8 @@ async function getTasks(userId, statusId = 0) {
 async function createTask(userId, taskName, description, deadline) {
   try {
     const [result] = await promisePool.query(
-      "INSERT INTO Tasks (user_id, task_name, description, deadline, StatusID) VALUES (?, ?, ?, ?, 0)",
-      [userId, taskName, description, deadline]
+      "INSERT INTO Tasks (user_id, task_name, description, deadline, end_date, StatusID) VALUES (?, ?, ?, ?, ?, 0)",
+      [userId, taskName, description, deadline, deadline]
     );
     return result.insertId;
   } catch (err) {
@@ -51,8 +51,8 @@ async function getTaskById(taskId) {
 async function updateTask(taskId, taskName, description, deadline) {
   try {
     const [result] = await promisePool.query(
-      "UPDATE Tasks SET task_name = ?, description = ?, deadline = ? WHERE id = ?",
-      [taskName, description, deadline, taskId]
+      "UPDATE Tasks SET task_name = ?, description = ?, deadline = ?, end_date = ? WHERE id = ?",
+      [taskName, description, deadline, deadline, taskId]
     );
     return result.affectedRows > 0;
   } catch (err) {
