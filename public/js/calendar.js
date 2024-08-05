@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
       week: "Week",
       day: "Day",
     },
-    editable: true,
-    selectable: true,
+    editable: false,
+    selectable: false,
     droppable: true,
     events: window.calendarTasks.map((task) => ({
       title: task.task_name,
@@ -65,10 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     },
-    eventReceive: function (info) {
-      info.event.setProp("editable", true);
-      console.log(info.event.title, info.event.startStr);
-    },
+    eventReceive: function (info) {},
     eventDidMount: function (info) {
       info.el.style.backgroundColor = "#ffcccb";
       info.el.style.border = "1px solid #ff0000";
