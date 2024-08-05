@@ -14,9 +14,19 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("edit-task-input").value = task.task_name;
         document.getElementById("edit-task-description").value =
           task.description;
-        document.getElementById("edit-task-deadline").value = task.deadline
-          ? new Date(task.deadline).toISOString().split("T")[0]
-          : "";
+
+        const deadline = task.deadline ? new Date(task.deadline) : null;
+        if (deadline) {
+          const localDeadline = new Date(
+            deadline.getTime() - deadline.getTimezoneOffset() * 60000
+          );
+          document.getElementById("edit-task-deadline").value = localDeadline
+            .toISOString()
+            .split("T")[0];
+        } else {
+          document.getElementById("edit-task-deadline").value = "";
+        }
+
         document
           .getElementById("edit-task-form")
           .setAttribute("data-task-id", taskId);
