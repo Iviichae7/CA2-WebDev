@@ -54,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
               if (response.ok) {
                 console.log("Task date updated:", taskId);
                 info.draggedEl.remove();
+                window.location.reload();
               } else {
                 throw new Error("Failed to update task date");
               }
