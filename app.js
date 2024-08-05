@@ -74,12 +74,12 @@ app.get("/task/:taskId", async (req, res) => {
 
 app.put("/tasks/:id/date", async (req, res) => {
   const { id } = req.params;
-  const { date } = req.body;
+  const { start_date, end_date } = req.body;
 
   try {
     const [result] = await promisePool.query(
-      "UPDATE Tasks SET deadline = ?, StatusID = 2 WHERE id = ?",
-      [date, id]
+      "UPDATE Tasks SET start_date = ?, deadline = ?, StatusID = 2 WHERE id = ?",
+      [start_date, end_date, id]
     );
 
     if (result.affectedRows === 0) {
@@ -130,8 +130,15 @@ app.put("/tasks/:taskId", async (req, res) => {
   const { taskId } = req.params;
   const { taskName, description, deadline } = req.body;
 
+  const formattedDeadline = new Date(deadline).toISOString().split("T")[0];
+
   try {
-    const success = await updateTask(taskId, taskName, description, deadline);
+    const success = await updateTask(
+      taskId,
+      taskName,
+      description,
+      formattedDeadline
+    );
     if (success) {
       res.json({ success: true });
     } else {
