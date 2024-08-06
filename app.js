@@ -7,7 +7,7 @@ const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const sessionStore = new MySQLStore({}, promisePool);
 

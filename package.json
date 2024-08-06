@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "npm run build:css && node app.js",
     "dev": "nodemon app.js",
     "build:css": "npx tailwindcss -i ./public/css/styles.css -o ./public/css/output.css",
     "watch:css": "npx tailwindcss -i ./public/css/styles.css -o ./public/css/output.css --watch",
