@@ -40,6 +40,15 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.redirect("/tasks/" + req.session.userId);
+    }
+    res.redirect("/");
+  });
+});
+
 const {
   getTasks,
   createTask,
